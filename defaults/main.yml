@@ -1,4 +1,30 @@
 ---
 # defaults file for ivansible.lin-shadowsocks-obfs
 
+lin_ss_configs: []
+
+lin_ss_defaults:
+  name: config
+  bindip: "0.0.0.0"
+  port: 443
+  local_port: 1080
+  password: secret
+  timeout: 60
+  method: aes-128-cfb
+
+obfs_build_deps:
+  - autoconf
+  - automake
+  - libtool
+  - asciidoc
+  - xmlto
+  - libssl-dev
+  - libpcre3-dev
+  - libc-ares-dev
+  - libev-dev
+
+obfs_build_deps_keep:
+  - build-essential
+
+obfs_server_binary: /usr/local/bin/obfs-server
 ...

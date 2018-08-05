@@ -1,0 +1,36 @@
+---
+- name: create simple-obfs build directory
+  tempfile:
+    state: directory
+    prefix: simple-obfs.
+  register: obfs_build_dir
+  notify: remove obfs build directory
+
+- name: checkout simple-obfs sources
+  git:
+    repo: https://github.com/shadowsocks/simple-obfs.git
+    dest: "{{ obfs_build_dir.path }}"
+    update: no
+
+- name: install simple-obfs build dependencies
+  apt:
+    name: "{{ obfs_build_deps
+            + obfs_build_deps_keep }}"
+    state: present
+    install_recommends: no
+  notify: remove stale obfs build dependencies
+
+- name: build and install simple-obfs
+  shell: >
+    git submodule update --init --recursive &&
+    ./autogen.sh &&
+    ./configure &&
+    make &&
+    make install
+  args:
+    chdir: "{{ obfs_build_dir.path }}"
+    creates: "{{ obfs_server_binary }}"
+
+- name: remove temporary build stuff now
+  meta: flush_handlers
+...

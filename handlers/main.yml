@@ -1,4 +1,18 @@
 ---
 # handlers file for ivansible.lin-shadowsocks-obfs
 
+- name: remove stale obfs build dependencies
+  apt:
+    name: "{{ obfs_build_deps
+            | difference(obfs_build_deps_keep) }}"
+    state: absent
+    autoremove: yes
+    autoclean: yes
+  become: yes
+
+- name: remove obfs build directory
+  file:
+    path: "{{ obfs_build_dir.path }}"
+    state: absent
+  become: yes
 ...

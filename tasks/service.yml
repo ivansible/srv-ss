@@ -1,0 +1,52 @@
+---
+- set_fact:
+    ss_name: "{{ item.name | default(lin_ss_defaults.name) }}"
+    ss_port: "{{ item.port | default(lin_ss_defaults.port) }}"
+
+- set_fact:
+    ss_service_name: "shadowsocks-libev{{ (ss_name != lin_ss_defaults.name)
+                                        | ternary('-server@'+ss_name, '') }}"
+
+- name: configure shadowsocks service ({{ ss_name }})
+  template:
+    src: config.json.j2
+    dest: /etc/shadowsocks-libev/{{ ss_name }}.json
+    owner: root
+    mode: 0644
+  become: yes
+  register: ss_config_file
+
+
+- name: temporarily stop shadowsocks service after fresh install
+  # note: this step is a workaround.
+  #       without this "recycling" the service might end up disabled.
+  systemd:
+    name: "{{ ss_service_name }}"
+    state: stopped
+    enabled: no
+    daemon_reload: yes
+  become: yes
+  when: ss_install_result is changed
+
+- name: enable shadowsocks service ({{ ss_name }})
+  systemd:
+    name: "{{ ss_service_name }}"
+    state: started
+    enabled: yes
+    daemon_reload: yes
+  become: yes
+
+- name: restart shadowsocks service ({{ ss_name }})
+  systemd:
+    name: "{{ ss_service_name }}"
+    state: restarted
+  become: yes
+  when: ss_config_file is changed
+
+
+- name: open shadowsocks port ({{ ss_name }})
+  ufw:
+    rule: allow
+    port: "{{ ss_port }}"
+  become: yes
+...
