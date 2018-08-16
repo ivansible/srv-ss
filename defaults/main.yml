@@ -1,5 +1,5 @@
 ---
-# defaults file for ivansible.lin-shadowsocks-obfs
+# defaults file for ivansible.lin_shadowsocks_obfs
 
 lin_ss_configs: []
 

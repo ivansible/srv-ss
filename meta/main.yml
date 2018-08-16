@@ -2,7 +2,7 @@
 dependencies: []
 
 galaxy_info:
-  role_name: lin-shadowsocks-obfs
+  role_name: lin_shadowsocks_obfs
   author: "Ivan Andreev"
   description: "install shadowsocks-libev and simple-obfs"
   company: "IvanSible"

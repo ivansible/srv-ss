@@ -1,5 +1,5 @@
 ---
-# handlers file for ivansible.lin-shadowsocks-obfs
+# handlers file for ivansible.lin_shadowsocks_obfs
 
 - name: remove stale obfs build dependencies
   apt:

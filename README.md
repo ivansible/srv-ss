@@ -1,4 +1,5 @@
-# ivansible.lin-shadowsocks-obfs
+# ivansible.lin_shadowsocks_obfs
+
 This role installs [shadowsocks-libev](https://github.com/shadowsocks/shadowsocks-libev#install-from-repository) server and [simple-obfs](https://github.com/shadowsocks/simple-obfs#intro) on linux
 
 The _shadowsocks-libev_ [PPA](https://launchpad.net/~max-c-lv/+archive/ubuntu/shadowsocks-libev) currently lacks _bionic_ packages. As a workaround, _xenial_ packages are installed.
@@ -46,7 +47,7 @@ None
 
     - hosts: vagrant-boxes
       roles:
-         - role: ivansible.lin-shadowsocks-obfs
+         - role: ivansible.lin_shadowsocks_obfs
            lin_ss_configs:
              - port: 12081
                password: secret1
