@@ -14,4 +14,10 @@
     path: "{{ obfs_build_dir.path }}"
     state: absent
   become: yes
+
+- name: restart rsyslog daemon
+  systemd:
+    name: rsyslog
+    state: restarted
+  become: yes
 ...
