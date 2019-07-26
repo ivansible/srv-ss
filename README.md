@@ -1,6 +1,6 @@
-# ivansible.lin_shadowsocks_obfs
+# ivansible.lin_shadowsocks
 
-This role installs [shadowsocks-libev](https://github.com/shadowsocks/shadowsocks-libev#install-from-repository) server and [simple-obfs](https://github.com/shadowsocks/simple-obfs#intro) on linux
+This role installs [shadowsocks-libev](https://github.com/shadowsocks/shadowsocks-libev#install-from-repository) server, [simple-obfs](https://github.com/shadowsocks/simple-obfs#intro) plugin on linux
 
 The _shadowsocks-libev_ [PPA](https://launchpad.net/~max-c-lv/+archive/ubuntu/shadowsocks-libev) currently lacks _bionic_ packages. As a workaround, _xenial_ packages are installed.
 

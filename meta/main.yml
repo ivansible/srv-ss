@@ -2,9 +2,9 @@
 dependencies: []
 
 galaxy_info:
-  role_name: lin_shadowsocks_obfs
+  role_name: lin_shadowsocks
   author: "Ivan Andreev"
-  description: "install shadowsocks-libev and simple-obfs"
+  description: "install shadowsocks-libev and plugins"
   company: "IvanSible"
   license: MIT
   min_ansible_version: 2.5
