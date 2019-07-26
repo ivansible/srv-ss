@@ -1,0 +1,21 @@
+{
+    "server":"{{ args.bindip }}",
+    "server_port":{{ args.port |int }},
+    "local_port":{{ args.local_port |int }},
+    "password":"{{ args.password }}",
+    "method":"{{ args.method }}",
+    "fast_open":{{ args.fast |bool |to_json }},
+    "reuse_port":{{ args.reuse |bool |to_json }},
+{% if args.mode %}
+    "mode":"{{ args.mode }}",
+{% endif %}
+{% if args.plugin == 'obfs' %}
+    "plugin":"{{ lin_ss_obfs_binary }}",
+    "plugin_opts":"obfs=tls",
+{% endif %}
+{% if args.plugin == 'v2ray' %}
+    "plugin":"{{ lin_ss_v2ray_binary }}",
+    "plugin_opts":"server;path={{ args.web_path }}",
+{% endif %}
+    "timeout":{{ args.timeout |int }}
+}

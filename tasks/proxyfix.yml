@@ -1,0 +1,26 @@
+---
+- name: create group for proxy processes
+  group:
+    name: proxy
+    gid: 13
+
+- name: create directory for main service snap-in
+  file:
+    path: /etc/systemd/system/shadowsocks-libev.service.d
+    state: directory
+
+- name: link directory for additional services snap-in
+  file:
+    state: link
+    dest: /etc/systemd/system/shadowsocks-libev-server@.service.d
+    src: shadowsocks-libev.service.d
+
+- name: set effective group of shadowsocks service to "proxy"
+  copy:
+    dest: /etc/systemd/system/shadowsocks-libev.service.d/group.conf
+    content: |
+      [Service]
+      # set group to "proxy" to activate sslh iptables fix
+      Group=proxy
+  register: ss_proxyfix_result
+...

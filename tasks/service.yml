@@ -1,52 +1,57 @@
 ---
-- set_fact:
-    ss_name: "{{ item.name | default(lin_ss_defaults.name) }}"
-    ss_port: "{{ item.port | default(lin_ss_defaults.port) }}"
+- name: merge arguments with defaults
+  set_fact:
+    args: "{{ lin_ss_defaults | combine(item) }}"
 
-- set_fact:
-    ss_service_name: "shadowsocks-libev{{ (ss_name != lin_ss_defaults.name)
-                                        | ternary('-server@'+ss_name, '') }}"
+- name: validate plugin type
+  assert:
+    that: args.plugin in ['none', 'obfs', 'v2ray']
 
-- name: configure shadowsocks service ({{ ss_name }})
+- name: configure shadowsocks service [{{ args.name }}]
   template:
-    src: config.json.j2
-    dest: /etc/shadowsocks-libev/{{ ss_name }}.json
+    src: ss-config.json
+    dest: /etc/shadowsocks-libev/{{ filename }}.json
     owner: root
     mode: 0644
-  become: yes
+  vars:
+    filename: "{{ (args.name == 'default') |ternary('config', args.name) }}"
   register: ss_config_file
 
+
+- name: derive systemd service name
+  set_fact:
+    svc_name: "{{ 'shadowsocks-libev' +
+      (args.name == 'default') |ternary('', '-server@' + args.name) }}"
 
 - name: temporarily stop shadowsocks service after fresh install
   # note: this step is a workaround.
   #       without this "recycling" the service might end up disabled.
   systemd:
-    name: "{{ ss_service_name }}"
+    name: "{{ svc_name }}"
     state: stopped
     enabled: no
     daemon_reload: yes
-  become: yes
   when: ss_install_result is changed
 
-- name: enable shadowsocks service ({{ ss_name }})
+- name: enable shadowsocks service [{{ args.name }}]
   systemd:
-    name: "{{ ss_service_name }}"
+    name: "{{ svc_name }}"
     state: started
     enabled: yes
     daemon_reload: yes
-  become: yes
 
-- name: restart shadowsocks service ({{ ss_name }})
+- name: restart shadowsocks service [{{ args.name }}]
   systemd:
-    name: "{{ ss_service_name }}"
+    name: "{{ svc_name }}"
     state: restarted
-  become: yes
+    daemon_reload: yes
   when: ss_config_file is changed
+        or ss_proxyfix_result is changed
 
 
-- name: open shadowsocks port ({{ ss_name }})
+- name: open shadowsocks port [{{ args.name }}]
   ufw:
-    rule: allow
-    port: "{{ ss_port }}"
-  become: yes
+    rule: "{{ args.direct |ternary('allow', 'deny') }}"
+    port: "{{ args.port |string }}"
+  no_log: true
 ...

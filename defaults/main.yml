@@ -4,15 +4,39 @@
 lin_ss_configs: []
 
 lin_ss_defaults:
-  name: config
-  bindip: "0.0.0.0"
-  port: 443
-  local_port: 1080
+  name: default
   password: secret
-  timeout: 60
   method: aes-128-cfb
+  bindip: 0.0.0.0
+  port: 9443
+  local_port: 1080
+  fast: true
+  reuse: true
+  #mode: tcp_and_udp
+  mode: ""
+  timeout: 600
+  direct: true
+  plugin: none
+  web_path: /
 
-obfs_build_deps:
+lin_ss_v2ray_version: latest
+lin_ss_v2ray_allow_reinstall: no
+lin_ss_v2ray_binary: /usr/local/bin/v2ray-plugin_linux_amd64
+
+# use fallback resolver by default
+#lin_ss_resolver: 8.8.8.8
+
+lin_ss_mirrors:
+  # `server` is a front server name, which can be
+  # 'default' (must go first) or full.host.name or .domain.name
+  # `origin` is host name of an origin server, which must support https
+  - server: default
+    origin: www.example.com
+
+lin_ss_obfs_enable: yes
+lin_ss_obfs_binary: /usr/local/bin/obfs-server
+
+lin_ss_obfs_build_deps:
   - autoconf
   - automake
   - libtool
@@ -23,8 +47,6 @@ obfs_build_deps:
   - libc-ares-dev
   - libev-dev
 
-obfs_build_deps_keep:
+lin_ss_obfs_build_deps_keep:
   - build-essential
-
-obfs_server_binary: /usr/local/bin/obfs-server
 ...

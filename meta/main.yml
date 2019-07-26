@@ -1,5 +1,7 @@
 ---
-dependencies: []
+dependencies:
+  - ivansible.nginx_base
+  # ivansible.lin_nginx (implicit dependency)
 
 galaxy_info:
   role_name: lin_shadowsocks

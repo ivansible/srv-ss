@@ -1,0 +1,14 @@
+---
+- name: add shadowsocks-libev ppa on xenial
+  apt_repository:
+    repo: ppa:max-c-lv/shadowsocks-libev
+    # see: https://launchpad.net/~max-c-lv/+archive/ubuntu/shadowsocks-libev
+    filename: shadowsocks-libev
+  when: ansible_lsb.codename == 'xenial'
+
+- name: install shadowsocks-libev package
+  apt:
+    name: shadowsocks-libev
+    update_cache: yes
+  register: ss_install_result
+...

@@ -3,8 +3,7 @@
 
 - name: remove stale obfs build dependencies
   apt:
-    name: "{{ obfs_build_deps
-            | difference(obfs_build_deps_keep) }}"
+    name: "{{ lin_ss_obfs_build_deps | difference(lin_ss_obfs_build_deps_keep) }}"
     state: absent
     autoremove: yes
     autoclean: yes

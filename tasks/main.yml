@@ -3,44 +3,9 @@
   setup:
   become: no
 
-
-- name: add shadowsocks-libev ppa
-  apt_repository:
-    repo: ppa:max-c-lv/shadowsocks-libev
-    # ppa does not have bionic packages yet. using xenial packages.
-    # see: https://launchpad.net/~max-c-lv/+archive/ubuntu/shadowsocks-libev
-    codename: "{{ 'xenial' if ansible_distribution_release == 'bionic'
-                  else omit }}"
-    filename: shadowsocks-libev
+# use import to become root globally
+- name: become root
+  import_tasks: root.yml
   become: yes
-  tags: lin_ss_install
-
-- name: install shadowsocks-libev from ppa
-  apt:
-    name: shadowsocks-libev
-    update_cache: yes
-  become: yes
-  register: ss_install_result
-  tags: lin_ss_install
-
-
-- name: check that simple-obfs binary exists
-  stat:
-    path: "{{ obfs_server_binary }}"
-    get_checksum: no
-    get_mime: no
-  register: simple_obfs_bin
-  tags: lin_ss_obfs
-
-- name: build simple-obfs
-  import_tasks: simple-obfs.yml
-  become: yes
-  when: not simple_obfs_bin.stat.exists
-  tags: lin_ss_obfs
-
-
-- name: configure shadowsocks services
-  include_tasks: service.yml
-  loop: "{{ lin_ss_configs }}"
-  tags: lin_ss_services
+  tags: lin_ss_all
 ...
