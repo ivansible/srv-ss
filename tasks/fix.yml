@@ -23,4 +23,18 @@
       # set group to "proxy" to activate sslh iptables fix
       Group=proxy
   register: ss_proxyfix_result
+
+- name: disable use of ambient capabilities on old kernels
+  copy:
+    dest: /etc/systemd/system/shadowsocks-libev.service.d/caps.conf
+    content: |
+      {% if ansible_kernel is version('4.3', '>') %}
+      # local kernel {{ ansible_kernel }} supports ambient capabilities
+      {% else %}
+      [Service]
+      # local kernel {{ ansible_kernel }} does not support ambient capabilities
+      # we can still run as user nobody because low ports are not used
+      AmbientCapabilities=
+      {% endif %}
+  register: ss_kernelfix_result
 ...

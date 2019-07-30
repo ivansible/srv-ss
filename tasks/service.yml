@@ -47,6 +47,7 @@
     daemon_reload: yes
   when: ss_config_file is changed
         or ss_proxyfix_result is changed
+        or ss_kernelfix_result is changed
 
 
 - name: open shadowsocks port [{{ args.name }}]

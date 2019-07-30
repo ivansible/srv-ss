@@ -3,9 +3,9 @@
   import_tasks: install.yml
   tags: lin_ss_install
 
-- name: activate sslh iptables fix for shadowsocks services
-  import_tasks: proxyfix.yml
-  tags: lin_ss_proxyfix
+- name: apply fixes to shadowsocks systemd services
+  import_tasks: fix.yml
+  tags: lin_ss_fix
 
 - name: install plugin v2ray
   import_tasks: v2ray.yml
