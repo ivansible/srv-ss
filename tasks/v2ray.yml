@@ -24,7 +24,9 @@
 - name: download archived v2ray plugin binary
   unarchive:
     remote_src: yes
-    src:  https://github.com/shadowsocks/v2ray-plugin/releases/download/v{{ lin_ss_v2ray_version }}/v2ray-plugin-linux-amd64-v{{ lin_ss_v2ray_version }}.tar.gz
+    src: "{{ url_releases }}/v{{ lin_ss_v2ray_version }}/v2ray-plugin-linux-amd64-v{{ lin_ss_v2ray_version }}.tar.gz"
     dest: "{{ lin_ss_v2ray_binary | dirname }}"
     creates: "{{ lin_ss_v2ray_allow_reinstall | ternary(omit, lin_ss_v2ray_binary) }}"
+  vars:
+    url_releases: https://github.com/shadowsocks/v2ray-plugin/releases/download
 ...

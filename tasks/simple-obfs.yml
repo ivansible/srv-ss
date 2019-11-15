@@ -10,6 +10,7 @@
   git:
     repo: https://github.com/shadowsocks/simple-obfs.git
     dest: "{{ obfs_build_dir.path }}"
+    version: master
     update: no
 
 - name: install simple-obfs build dependencies
@@ -20,6 +21,7 @@
   notify: remove stale obfs build dependencies
 
 - name: build and install simple-obfs
+  # noqa 303 - cannot use git module here
   shell: >
     git submodule update --init --recursive &&
     ./autogen.sh &&
