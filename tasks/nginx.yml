@@ -1,9 +1,4 @@
 ---
-- name: directory for backend configurations
-  file:
-    path: /etc/nginx/bastion.d
-    state: directory
-
 - name: create configuration for backend [{{ backend.name }}]
   template:
     src: nginx-backend.conf

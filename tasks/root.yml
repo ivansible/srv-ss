@@ -33,6 +33,12 @@
   loop: "{{ lin_ss_configs }}"
   tags: lin_ss_services
 
+- name: directory for nginx backend configurations
+  file:
+    path: /etc/nginx/bastion.d
+    state: directory
+  tags: lin_ss_nginx
+
 - name: find v2ray entries for nginx fronting, the first one will be routed
   set_fact:
     backend_entries: "{{ lin_ss_configs | json_query(\"[?plugin=='v2ray']\") }}"
@@ -46,6 +52,6 @@
       tags: lin_ss_nginx
   vars:
     backend: "{{ lin_ss_defaults | combine(backend_entries[0]) }}"
-  when: backend_entries
+  when: backend_entries |length > 0
   tags: lin_ss_nginx
 ...

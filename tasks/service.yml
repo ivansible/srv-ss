@@ -54,4 +54,5 @@
     rule: "{{ args.direct |ternary('allow', 'deny') }}"
     port: "{{ args.port |string }}"
   no_log: true
+  when: lin_use_firewall |bool
 ...

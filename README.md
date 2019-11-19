@@ -51,9 +51,13 @@ TODO...
 ## Tags
 
 - `lin_ss_install` -- install shadowsocks-libev from PPA
+- `lin_ss_fix` -- aply service fixes: set `proxy` process group,
+                  disable ambiend capabilities on old kernels, etc
+- `lin_ss_v2ray` -- install v2ray plugin
 - `lin_ss_obfs` -- build and install simple-obfs
 - `lin_ss_services` -- configure and activate shadowsocks services
-- TODO...
+- `lin_ss_nginx` -- configure nginx fronting
+- `lin_ss_all` -- all of above
 
 
 ## Dependencies
