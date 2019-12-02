@@ -1,32 +1,17 @@
 ---
 - name: detect latest v2ray plugin release
-  uri:
-    url: https://github.com/shadowsocks/v2ray-plugin/releases/latest
-    method: HEAD
-    creates: "{{ lin_ss_v2ray_allow_reinstall | ternary(omit, lin_ss_v2ray_binary) }}"
-    # never use connection:local with "creates"
+  github_release:
+    repository: shadowsocks/v2ray-plugin
+    release: "{{ lin_ss_v2ray_version }}"
+    template: "{download_url}/v2ray-plugin-linux-amd64-{ver}.tar.gz"
+    creates: "{{ lin_ss_v2ray_binary }}"
+    reinstall: "{{ lin_ss_v2ray_allow_reinstall |bool }}"
   register: latest_ss_v2ray_release
-  when: lin_ss_v2ray_version == 'latest'
-
-- name: extract v2ray plugin release from github page
-  set_fact:
-    lin_ss_v2ray_version:
-      "{{ latest_ss_v2ray_release.url | basename | regex_replace('^v') }}"
-  when: latest_ss_v2ray_release is not skipped
-        and latest_ss_v2ray_release.url is defined
-
-- debug:
-    msg: "latest v2ray plugin release: {{ lin_ss_v2ray_version }}"
-  run_once: true
-  when: latest_ss_v2ray_release is not skipped
-        and latest_ss_v2ray_release.url is defined
 
 - name: download archived v2ray plugin binary
   unarchive:
-    remote_src: yes
-    src: "{{ url_releases }}/v{{ lin_ss_v2ray_version }}/v2ray-plugin-linux-amd64-v{{ lin_ss_v2ray_version }}.tar.gz"
-    dest: "{{ lin_ss_v2ray_binary | dirname }}"
-    creates: "{{ lin_ss_v2ray_allow_reinstall | ternary(omit, lin_ss_v2ray_binary) }}"
-  vars:
-    url_releases: https://github.com/shadowsocks/v2ray-plugin/releases/download
+    remote_src: true
+    src: "{{ latest_ss_v2ray_release.url }}"
+    dest: "{{ lin_ss_v2ray_binary |dirname }}"
+  when: latest_ss_v2ray_release is changed
 ...
