@@ -4,7 +4,7 @@ dependencies:
   # ivansible.lin_nginx (implicit dependency)
 
 galaxy_info:
-  role_name: lin_shadowsocks
+  role_name: srv_ss
   author: "Ivan Andreev"
   description: "install shadowsocks-libev and plugins"
   company: "IvanSible"

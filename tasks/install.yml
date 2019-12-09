@@ -9,19 +9,19 @@
 - name: install shadowsocks-libev package
   apt:
     name: shadowsocks-libev
-    update_cache: yes
+    update_cache: true
   register: ss_install_result
 
 - name: send shadowsocks syslog to dedicated log
   copy:
     src: rsyslog.conf
     dest: /etc/rsyslog.d/33-shadowsocks.conf
-    force: no
+    force: false
   notify: restart rsyslog daemon
 
 - name: rotate shadowsocks log
   copy:
     src: logrotate.conf
     dest: /etc/logrotate.d/shadowsocks
-    force: no
+    force: false
 ...

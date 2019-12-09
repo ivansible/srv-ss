@@ -2,16 +2,16 @@
 - name: detect latest v2ray plugin release
   github_release:
     repository: shadowsocks/v2ray-plugin
-    release: "{{ lin_ss_v2ray_version }}"
+    release: "{{ srv_ss_v2ray_version }}"
     template: "{download_url}/v2ray-plugin-linux-amd64-{ver}.tar.gz"
-    creates: "{{ lin_ss_v2ray_binary }}"
-    reinstall: "{{ lin_ss_v2ray_allow_reinstall |bool }}"
+    creates: "{{ srv_ss_v2ray_binary }}"
+    reinstall: "{{ srv_ss_v2ray_allow_reinstall |bool }}"
   register: latest_ss_v2ray_release
 
 - name: download archived v2ray plugin binary
   unarchive:
     remote_src: true
     src: "{{ latest_ss_v2ray_release.url }}"
-    dest: "{{ lin_ss_v2ray_binary |dirname }}"
+    dest: "{{ srv_ss_v2ray_binary |dirname }}"
   when: latest_ss_v2ray_release is changed
 ...

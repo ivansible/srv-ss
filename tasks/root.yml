@@ -1,57 +1,57 @@
 ---
 - name: install shadowsocks-libev
   import_tasks: install.yml
-  tags: lin_ss_install
+  tags: srv_ss_install
 
 - name: apply fixes to shadowsocks systemd services
   import_tasks: fix.yml
-  tags: lin_ss_fix
+  tags: srv_ss_fix
 
 - name: install plugin v2ray
   import_tasks: v2ray.yml
-  tags: lin_ss_v2ray
+  tags: srv_ss_v2ray
 
 - name: check that simple-obfs binary exists
   stat:
-    path: "{{ lin_ss_obfs_binary }}"
-    get_checksum: no
+    path: "{{ srv_ss_obfs_binary }}"
+    get_checksum: false
   register: obfs_plugin_binary
-  when: lin_ss_obfs_enable |bool
-  tags: lin_ss_obfs
+  when: srv_ss_obfs_enable |bool
+  tags: srv_ss_obfs
 
 - name: build plugin simple-obfs
   import_tasks: simple-obfs.yml
-  when: lin_ss_obfs_enable |bool  and not obfs_plugin_binary.stat.exists
-  tags: lin_ss_obfs
+  when: srv_ss_obfs_enable |bool  and not obfs_plugin_binary.stat.exists
+  tags: srv_ss_obfs
 
 - name: configure shadowsocks services
   include_tasks: service.yml
   args:
     apply:
-      become: yes
-      tags: lin_ss_services
-  loop: "{{ lin_ss_configs }}"
-  tags: lin_ss_services
+      become: true
+      tags: srv_ss_services
+  loop: "{{ srv_ss_configs }}"
+  tags: srv_ss_services
 
 - name: directory for nginx backend configurations
   file:
     path: /etc/nginx/bastion.d
     state: directory
-  tags: lin_ss_nginx
+  tags: srv_ss_nginx
 
 - name: find v2ray entries for nginx fronting, the first one will be routed
   set_fact:
-    backend_entries: "{{ lin_ss_configs | json_query(\"[?plugin=='v2ray']\") }}"
-  tags: lin_ss_nginx
+    backend_entries: "{{ srv_ss_configs | json_query(\"[?plugin=='v2ray']\") }}"
+  tags: srv_ss_nginx
 
 - name: configure nginx for shadowsocks fronting
   include_tasks: nginx.yml
   args:
     apply:
-      become: yes
-      tags: lin_ss_nginx
+      become: true
+      tags: srv_ss_nginx
   vars:
-    backend: "{{ lin_ss_defaults | combine(backend_entries[0]) }}"
+    backend: "{{ srv_ss_defaults | combine(backend_entries[0]) }}"
   when: backend_entries |length > 0
-  tags: lin_ss_nginx
+  tags: srv_ss_nginx
 ...

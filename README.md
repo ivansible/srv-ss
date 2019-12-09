@@ -1,4 +1,4 @@
-# ivansible.lin_shadowsocks
+# ivansible.srv_ss
 
 This role installs
 [shadowsocks-libev](https://github.com/shadowsocks/shadowsocks-libev#install-from-repository)
@@ -23,9 +23,9 @@ None
 
 Available variables are listed below, along with default values.
 
-    lin_ss_configs: []
+    srv_ss_configs: []
 
-    lin_ss_defaults:
+    srv_ss_defaults:
       name: config
       bindip: "0.0.0.0"
       port: 9443
@@ -34,7 +34,7 @@ Available variables are listed below, along with default values.
       timeout: 60
       method: aes-128-cfb
 
-    lin_ss_obfs_build_deps:
+    srv_ss_obfs_build_deps:
       - autoconf
       - automake
       - libtool
@@ -50,14 +50,14 @@ TODO...
 
 ## Tags
 
-- `lin_ss_install` -- install shadowsocks-libev from PPA
-- `lin_ss_fix` -- aply service fixes: set `proxy` process group,
+- `srv_ss_install` -- install shadowsocks-libev from PPA
+- `srv_ss_fix` -- aply service fixes: set `proxy` process group,
                   disable ambiend capabilities on old kernels, etc
-- `lin_ss_v2ray` -- install v2ray plugin
-- `lin_ss_obfs` -- build and install simple-obfs
-- `lin_ss_services` -- configure and activate shadowsocks services
-- `lin_ss_nginx` -- configure nginx fronting
-- `lin_ss_all` -- all of above
+- `srv_ss_v2ray` -- install v2ray plugin
+- `srv_ss_obfs` -- build and install simple-obfs
+- `srv_ss_services` -- configure and activate shadowsocks services
+- `srv_ss_nginx` -- configure nginx fronting
+- `srv_ss_all` -- all of above
 
 
 ## Dependencies
@@ -70,8 +70,8 @@ TODO...
 
     - hosts: myproxy
       roles:
-         - role: ivansible.lin_shadowsocks_obfs
-           lin_ss_configs:
+         - role: ivansible.srv_ss
+           srv_ss_configs:
              - port: 12081
                password: secret1
 
@@ -82,4 +82,4 @@ MIT
 
 ## Author Information
 
-Created in 2018 by [IvanSible](https://github.com/ivansible)
+Created in 2018-2020 by [IvanSible](https://github.com/ivansible)

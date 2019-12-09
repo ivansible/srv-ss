@@ -1,7 +1,7 @@
 ---
 - name: merge arguments with defaults
   set_fact:
-    args: "{{ lin_ss_defaults | combine(item) }}"
+    args: "{{ srv_ss_defaults | combine(item) }}"
 
 - name: validate plugin type
   assert:
@@ -29,22 +29,22 @@
   systemd:
     name: "{{ svc_name }}"
     state: stopped
-    enabled: no
-    daemon_reload: yes
+    enabled: false
+    daemon_reload: true
   when: ss_install_result is changed
 
 - name: enable shadowsocks service [{{ args.name }}]
   systemd:
     name: "{{ svc_name }}"
     state: started
-    enabled: yes
-    daemon_reload: yes
+    enabled: true
+    daemon_reload: true
 
 - name: restart shadowsocks service [{{ args.name }}]
   systemd:
     name: "{{ svc_name }}"
     state: restarted
-    daemon_reload: yes
+    daemon_reload: true
   when: ss_config_file is changed
         or ss_proxyfix_result is changed
         or ss_kernelfix_result is changed

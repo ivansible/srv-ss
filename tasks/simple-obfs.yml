@@ -11,13 +11,13 @@
     repo: https://github.com/shadowsocks/simple-obfs.git
     dest: "{{ obfs_build_dir.path }}"
     version: master
-    update: no
+    update: false
 
 - name: install simple-obfs build dependencies
   apt:
-    name: "{{ lin_ss_obfs_build_deps + lin_ss_obfs_build_deps_keep }}"
+    name: "{{ srv_ss_obfs_build_deps + srv_ss_obfs_build_deps_keep }}"
     state: present
-    install_recommends: no
+    install_recommends: false
   notify: remove stale obfs build dependencies
 
 - name: build and install simple-obfs
@@ -30,7 +30,7 @@
     make install
   args:
     chdir: "{{ obfs_build_dir.path }}"
-    creates: "{{ lin_ss_obfs_binary }}"
+    creates: "{{ srv_ss_obfs_binary }}"
 
 - name: remove temporary build stuff now
   meta: flush_handlers

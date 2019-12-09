@@ -1,23 +1,23 @@
 ---
-# handlers file for ivansible.lin_shadowsocks
+# handlers for ivansible.srv_ss
 
 - name: remove stale obfs build dependencies
   apt:
-    name: "{{ lin_ss_obfs_build_deps | difference(lin_ss_obfs_build_deps_keep) }}"
+    name: "{{ srv_ss_obfs_build_deps | difference(srv_ss_obfs_build_deps_keep) }}"
     state: absent
-    autoremove: yes
-    autoclean: yes
-  become: yes
+    autoremove: true
+    autoclean: true
+  become: true
 
 - name: remove obfs build directory
   file:
     path: "{{ obfs_build_dir.path }}"
     state: absent
-  become: yes
+  become: true
 
 - name: restart rsyslog daemon
   systemd:
     name: rsyslog
     state: restarted
-  become: yes
+  become: true
 ...

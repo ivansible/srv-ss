@@ -1,9 +1,9 @@
 ---
-# defaults file for ivansible.lin_shadowsocks
+# defaults for ivansible.srv_ss
 
-lin_ss_configs: []
+srv_ss_configs: []
 
-lin_ss_defaults:
+srv_ss_defaults:
   name: default
   password: secret
   method: aes-128-cfb
@@ -19,24 +19,24 @@ lin_ss_defaults:
   plugin: none
   web_path: /
 
-lin_ss_v2ray_version: latest
-lin_ss_v2ray_allow_reinstall: no
-lin_ss_v2ray_binary: /usr/local/bin/v2ray-plugin_linux_amd64
+srv_ss_v2ray_version: latest
+srv_ss_v2ray_allow_reinstall: false
+srv_ss_v2ray_binary: /usr/local/bin/v2ray-plugin_linux_amd64
 
 # use fallback resolver by default
-#lin_ss_resolver: 8.8.8.8
+#srv_ss_resolver: 8.8.8.8
 
-lin_ss_mirrors:
+srv_ss_mirrors:
   # `server` is a front server name, which can be
   # 'default' (must go first) or full.host.name or .domain.name
   # `origin` is host name of an origin server, which must support https
   - server: default
     origin: www.example.com
 
-lin_ss_obfs_enable: yes
-lin_ss_obfs_binary: /usr/local/bin/obfs-server
+srv_ss_obfs_enable: true
+srv_ss_obfs_binary: /usr/local/bin/obfs-server
 
-lin_ss_obfs_build_deps:
+srv_ss_obfs_build_deps:
   - autoconf
   - automake
   - libtool
@@ -47,6 +47,6 @@ lin_ss_obfs_build_deps:
   - libc-ares-dev
   - libev-dev
 
-lin_ss_obfs_build_deps_keep:
+srv_ss_obfs_build_deps_keep:
   - build-essential
 ...
