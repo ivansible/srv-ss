@@ -68,7 +68,7 @@ TODO...
 
 ## Example Playbook
 
-    - hosts: vagrant-boxes
+    - hosts: myproxy
       roles:
          - role: ivansible.lin_shadowsocks_obfs
            lin_ss_configs:

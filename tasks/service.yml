@@ -50,10 +50,19 @@
         or ss_kernelfix_result is changed
 
 
-- name: open shadowsocks port [{{ args.name }}]
+- name: open shadowsocks port in ufw [{{ args.name }}]
   ufw:
-    rule: "{{ args.direct |ternary('allow', 'deny') }}"
     port: "{{ args.port |string }}"
-  no_log: true
-  when: lin_use_firewall |bool
+    rule: "{{ args.direct |bool |ternary('allow','deny') }}"
+  no_log: "{{ hide_secrets |bool }}"
+  when: lin_firewall == 'ufw'
+
+- name: open shadowsocks port in ferm [{{ args.name }}]
+  ferm_port:
+    port: "{{ args.port }}"
+    domain: "{{ args.direct |bool |ternary('external','internal') }}"
+    exclusive: true
+    comment: "shadowsocks {{ args.name }}"
+  tags: skip_ansible_lint
+  when: lin_firewall == 'ferm'
 ...

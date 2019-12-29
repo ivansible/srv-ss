@@ -1,6 +1,6 @@
 ---
 dependencies:
-  - ivansible.nginx_base
+  - ivansible.nginx_base  # for common defaults and custom modules
   # ivansible.lin_nginx (implicit dependency)
 
 galaxy_info:
@@ -20,6 +20,7 @@ galaxy_info:
   galaxy_tags:
     - linux
     - proxy
+    - shadowsocks
 
   github_branch: master
 ...
