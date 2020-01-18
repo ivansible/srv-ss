@@ -9,7 +9,7 @@
 - name: install shadowsocks-libev package
   apt:
     name: shadowsocks-libev
-    update_cache: true
+    update_cache: "{{ ansible_lsb.codename == 'xenial' }}"
   register: ss_install_result
 
 - name: send shadowsocks syslog to dedicated log
