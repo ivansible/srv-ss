@@ -1,7 +1,6 @@
 ---
 dependencies:
-  - ivansible.nginx_base  # for common defaults and custom modules
-  # ivansible.lin_nginx (implicit dependency)
+  - ivansible.srv_cdn  # prepare nginx
 
 galaxy_info:
   role_name: srv_ss

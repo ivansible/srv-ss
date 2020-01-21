@@ -19,13 +19,6 @@ srv_ss_defaults:
   plugin: none
   web_path: /
 
-srv_ss_mirrors:
-  # `server` is a front server name, which can be
-  # 'default' (must go first) or full.host.name or .domain.name
-  # `origin` is host name of an origin server, which must support https
-  - server: default
-    origin: www.example.com
-
 srv_ss_v2ray_version: latest
 srv_ss_v2ray_allow_reinstall: false
 srv_ss_v2ray_binary: /usr/local/sbin/v2ray-plugin

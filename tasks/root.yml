@@ -40,25 +40,24 @@
   loop: "{{ srv_ss_configs }}"
   tags: srv_ss_services
 
-- name: directory for nginx backend configurations
-  file:
-    path: /etc/nginx/bastion.d
-    state: directory
-  tags: srv_ss_nginx
-
 - name: find v2ray entries for nginx fronting, the first one will be routed
   set_fact:
     backend_entries: "{{ srv_ss_configs | json_query(\"[?plugin=='v2ray']\") }}"
   tags: srv_ss_nginx
 
+- name: directory for nginx backend configs
+  file:
+    path: /etc/nginx/mixin.d
+    state: directory
+  tags: srv_ss_nginx
+
 - name: configure nginx for shadowsocks fronting
-  include_tasks: nginx.yml
-  args:
-    apply:
-      become: true
-      tags: srv_ss_nginx
+  template:
+    src: nginx-backend.conf
+    dest: /etc/nginx/mixin.d/shadowsocks-{{ backend.name }}.conf
   vars:
     backend: "{{ srv_ss_defaults | combine(backend_entries[0]) }}"
+  notify: reload nginx service
   when: backend_entries |length > 0
   tags: srv_ss_nginx
 ...

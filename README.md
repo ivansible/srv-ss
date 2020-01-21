@@ -3,8 +3,7 @@
 This role installs
 [shadowsocks-libev](https://github.com/shadowsocks/shadowsocks-libev#install-from-repository)
 server, and two protocol plugins: [v2ray](https://github.com/shadowsocks/v2ray-plugin])
-and [simple-obfs](https://github.com/shadowsocks/simple-obfs#intro) (now deprecated)
-on linux.
+and [simple-obfs](https://github.com/shadowsocks/simple-obfs#intro) (now deprecated).
 
 The main package is installed from official Ubuntu repositories on _bionic_ or from the
 _shadowsocks-libev_ [PPA](https://launchpad.net/~max-c-lv/+archive/ubuntu/shadowsocks-libev) on _xenial_.
@@ -62,8 +61,7 @@ TODO...
 
 ## Dependencies
 
-- `ivansible.nginx_base`
-- `ivansible.lin_nginx`  (implicit dependency)
+- `ivansible.srv_cdn`
 
 
 ## Example Playbook
