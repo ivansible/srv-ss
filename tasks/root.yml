@@ -20,8 +20,15 @@
   tags: srv_ss_obfs
 
 - name: build plugin simple-obfs
-  import_tasks: simple-obfs.yml
-  when: srv_ss_obfs_enable |bool  and not obfs_plugin_binary.stat.exists
+  include_tasks: simple-obfs.yml
+  args:
+    apply:
+      become: true
+      tags:
+        - srv_ss_obfs
+        - srv_ss_all
+  when: srv_ss_obfs_enable |bool
+        and not obfs_plugin_binary.stat.exists
   tags: srv_ss_obfs
 
 - name: configure shadowsocks services

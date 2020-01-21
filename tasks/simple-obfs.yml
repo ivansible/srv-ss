@@ -10,7 +10,7 @@
   git:
     repo: https://github.com/shadowsocks/simple-obfs.git
     dest: "{{ obfs_build_dir.path }}"
-    version: master
+    version: "{{ srv_ss_obfs_version }}"
     update: false
 
 - name: install simple-obfs build dependencies
@@ -21,13 +21,17 @@
   notify: remove stale obfs build dependencies
 
 - name: build and install simple-obfs
-  # noqa 303 - cannot use git module here
+  # noqa 303 306 - cannot use git module here; no pipes here
   shell: >
     git submodule update --init --recursive &&
     ./autogen.sh &&
     ./configure &&
     make &&
     make install
+    {% if (srv_ss_obfs_binary |dirname) != '/usr/local/bin' %}
+    && mv /usr/local/bin/obfs-server "{{ srv_ss_obfs_binary }}"
+    && mv /usr/local/bin/obfs-local "{{ srv_ss_obfs_binary |dirname }}"
+    {% endif %}
   args:
     chdir: "{{ obfs_build_dir.path }}"
     creates: "{{ srv_ss_obfs_binary }}"

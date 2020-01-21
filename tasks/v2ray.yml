@@ -14,4 +14,12 @@
     src: "{{ latest_ss_v2ray_release.url }}"
     dest: "{{ srv_ss_v2ray_binary |dirname }}"
   when: latest_ss_v2ray_release is changed
+
+- name: move v2ray plugin binary in-place
+  command:
+    argv:
+      - mv
+      - "{{ srv_ss_v2ray_binary }}_linux_amd64"
+      - "{{ srv_ss_v2ray_binary }}"
+  when: latest_ss_v2ray_release is changed
 ...

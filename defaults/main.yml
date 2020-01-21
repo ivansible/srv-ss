@@ -12,19 +12,12 @@ srv_ss_defaults:
   local_port: 1080
   fast: true
   reuse: true
-  #mode: tcp_and_udp
+  # mode: tcp_and_udp
   mode: ""
   timeout: 600
   direct: true
   plugin: none
   web_path: /
-
-srv_ss_v2ray_version: latest
-srv_ss_v2ray_allow_reinstall: false
-srv_ss_v2ray_binary: /usr/local/bin/v2ray-plugin_linux_amd64
-
-# use fallback resolver by default
-#srv_ss_resolver: 8.8.8.8
 
 srv_ss_mirrors:
   # `server` is a front server name, which can be
@@ -33,8 +26,13 @@ srv_ss_mirrors:
   - server: default
     origin: www.example.com
 
+srv_ss_v2ray_version: latest
+srv_ss_v2ray_allow_reinstall: false
+srv_ss_v2ray_binary: /usr/local/sbin/v2ray-plugin
+
 srv_ss_obfs_enable: true
-srv_ss_obfs_binary: /usr/local/bin/obfs-server
+srv_ss_obfs_version: v0.0.5
+srv_ss_obfs_binary: /usr/local/sbin/obfs-server
 
 srv_ss_obfs_build_deps:
   - autoconf
