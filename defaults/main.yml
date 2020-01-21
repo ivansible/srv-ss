@@ -30,7 +30,8 @@ srv_ss_v2ray_version: latest
 srv_ss_v2ray_allow_reinstall: false
 srv_ss_v2ray_binary: /usr/local/sbin/v2ray-plugin
 
-srv_ss_obfs_enable: true
+# obfs plugin is obsolete, disabled by default
+srv_ss_obfs_enable: false
 srv_ss_obfs_version: v0.0.5
 srv_ss_obfs_binary: /usr/local/sbin/obfs-server
 
