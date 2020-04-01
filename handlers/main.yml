@@ -1,5 +1,6 @@
 ---
-# handlers for ivansible.srv_ss
+## handlers for ivansible.srv_ss
+## handler 'restart syslog service' is imported from ivansible.lin_base
 
 - name: remove stale obfs build dependencies
   apt:
@@ -13,11 +14,5 @@
   file:
     path: "{{ obfs_build_dir.path }}"
     state: absent
-  become: true
-
-- name: restart rsyslog daemon
-  systemd:
-    name: rsyslog
-    state: restarted
   become: true
 ...

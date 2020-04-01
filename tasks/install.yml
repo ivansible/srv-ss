@@ -17,16 +17,16 @@
     name: shadowsocks-libev
   register: ss_install_result
 
+
 - name: send shadowsocks syslog to dedicated log
   copy:
     src: rsyslog.conf
     dest: /etc/rsyslog.d/33-shadowsocks.conf
-    force: false
-  notify: restart rsyslog daemon
+    force: true
+  notify: restart syslog service
 
 - name: rotate shadowsocks log
-  copy:
+  template:
     src: logrotate.conf
     dest: /etc/logrotate.d/shadowsocks
-    force: false
 ...

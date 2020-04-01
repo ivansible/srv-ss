@@ -2,5 +2,13 @@
 - name: use import to become root globally
   import_tasks: root.yml
   become: true
-  tags: srv_ss_all
+  tags:
+    - srv_ss_all
+    - srv_shadowsocks_all
+
+- name: run delayed handlers now
+  meta: flush_handlers
+  tags:
+    - srv_ss_all
+    - srv_shadowsocks_all
 ...

@@ -61,8 +61,12 @@ TODO...
 
 ## Dependencies
 
-- `ivansible.srv_cdn`
-
+- [ivansible.lin_base](https://github.com/ivansible/lin-base)
+  - common ansible handlers, default parameters and custom modules
+  - handler to restart syslog service
+  - global flag `lin_compress_logs` enables compression of rotated logs
+- [ivansible.srv_cdn](https://github.com/ivansible/srv-cdn)
+  - installs nginx and creates directory for mixin configs
 
 ## Example Playbook
 
