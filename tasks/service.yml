@@ -60,8 +60,8 @@
 - name: open shadowsocks port in ferm [{{ args.name }}]
   ferm_port:
     port: "{{ args.port }}"
-    domain: "{{ args.direct |bool |ternary('external','internal') }}"
-    solo: true
+    zone: "{{ args.direct |bool |ternary('external','internal') }}"
+    solo_zone: true
     comment: "shadowsocks {{ args.name }}"
   tags: skip_ansible_lint
   when: lin_firewall == 'ferm'
