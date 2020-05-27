@@ -20,8 +20,7 @@
 
 - name: derive systemd service name
   set_fact:
-    svc_name: "{{ 'shadowsocks-libev' +
-      (args.name == 'default') |ternary('', '-server@' + args.name) }}"
+    svc_name: "shadowsocks-libev{{ (args.name == 'default') |ternary('', '-server@' + args.name) }}"
 
 - name: temporarily stop shadowsocks service after fresh install
   # note: this step is a workaround.

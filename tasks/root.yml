@@ -27,8 +27,9 @@
       tags:
         - srv_ss_obfs
         - srv_ss_all
-  when: srv_ss_obfs_enable |bool
-        and not obfs_plugin_binary.stat.exists
+  when:
+    - srv_ss_obfs_enable |bool
+    - not obfs_plugin_binary.stat.exists
   tags: srv_ss_obfs
 
 - name: configure shadowsocks services

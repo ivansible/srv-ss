@@ -5,15 +5,15 @@
     release: "{{ srv_ss_v2ray_version }}"
     template: "{download_url}/v2ray-plugin-linux-amd64-{ver}.tar.gz"
     creates: "{{ srv_ss_v2ray_binary }}"
-    reinstall: "{{ srv_ss_v2ray_allow_reinstall |bool }}"
-  register: latest_ss_v2ray_release
+    reinstall: "{{ srv_ss_v2ray_upgrade |bool }}"
+  register: _ss_v2ray_release
 
 - name: download archived v2ray plugin binary
   unarchive:
     remote_src: true
-    src: "{{ latest_ss_v2ray_release.url }}"
+    src: "{{ _ss_v2ray_release.url }}"
     dest: "{{ srv_ss_v2ray_binary |dirname }}"
-  when: latest_ss_v2ray_release is changed
+  when: _ss_v2ray_release is changed
 
 - name: move v2ray plugin binary in-place
   command:
@@ -21,5 +21,5 @@
       - mv
       - "{{ srv_ss_v2ray_binary }}_linux_amd64"
       - "{{ srv_ss_v2ray_binary }}"
-  when: latest_ss_v2ray_release is changed
+  when: _ss_v2ray_release is changed
 ...
