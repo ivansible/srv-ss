@@ -22,6 +22,8 @@
       [Service]
       # set group to "proxy" to activate sslh iptables fix
       Group=proxy
+    force: true
+    mode: 0644
   register: ss_proxyfix_result
 
 - name: disable use of ambient capabilities on old kernels
@@ -36,6 +38,8 @@
       # we can still run as user nobody because low ports are not used
       AmbientCapabilities=
       {% endif %}
+    force: true
+    mode: 0644
   vars:
     ## keep only major/minor componenets in kernel release number because
     ## micro components frequently change after kernel upgrades
